@@ -445,6 +445,6 @@
 Ви можете імпортувати рахунки-фактури, клієнтів, продукти
 
 ## API
-Опис API можна знайти тут: Fakturownia API
+Опис API можна знайти тут: [BitFaktura API](https://github.com/bitfaktura-com-ua/API)
 
 
