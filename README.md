@@ -7,7 +7,7 @@
 Змінні, які можна використовувати в шаблонах:
 
 ``` 
-curl {{absolute_outstanding}}
+{{absolute_outstanding}}
 {{absolute_outstanding_in_exchange_currency}}
 {{absolute_outstanding_in_words}}
 {{absolute_outstanding_in_words_in_exchange_currency}}
@@ -345,11 +345,12 @@ curl {{absolute_outstanding}}
 {{footer}}
 ```
 
-## Szablony e-maili
+## Шаблони повідомлень email
 Ви можете створити шаблони електронної пошти, які надсилатимуться клієнтам. Є два шаблони для стандартної відправки рахунків-фактур і для надсилання нагадувань про неоплачені рахунки. Під час створення шаблонів ви використовуєте ті самі змінні, що й для шаблонів рахунків-фактур, а також використовуєте Handlebars.
 Шаблон за замовчуванням для надсилання рахунків-фактур:
 
-`Добрий дня,
+``` 
+Добрий дня,
 
 дякуємо за користування нашими послугами.
 Додаю документ
@@ -359,4 +360,91 @@ curl {{absolute_outstanding}}
 
 
 {{footer}}
-`
+``` 
+
+Шаблон нагадування про неоплачений рахунок-фактуру за умовчанням:
+``` 
+Добрий дня,
+
+нагадуємо про прострочення платежу
+{{document_type}} {{number}} в сумі {{total_price_gross}} з ПДВ.
+
+Посилання для перегляду: {{view_url}}
+
+{{footer}}
+``` 
+
+## Функції доступні в шаблонах рахунків-фактур та електронних листів
+У шаблонах доступні такі функції: 
+ if
+  for
+  eq
+  not_eq
+  lt
+  gt
+  or
+  and
+  tt
+  include
+  include_in_col
+  in
+  not_in
+  to_uppercase
+  replace
+  inc
+  dec
+  abs
+  if_created_after_date
+  inline_partial
+
+Приклад виклику функції:
+``` 
+{{#if val1 }}
+  ok
+{{else}}
+  not ok
+}}
+
+{{#lt val1 17 }}
+  <17
+}}
+
+{{#gt val1 17 }}
+  >17
+{{else}}
+ <17
+}}
+
+{{#eq department_id "123"}}
+  інформація для відділу
+{{else}}
+ інформація для інших відділів
+{{/eq}}
+
+{{#for size_from size_to}}
+    no: {{no}}
+{{/for}}
+
+{{inline_partial "partial1" "{{document_type}} {{number}}: {{total_price_gross_with_currency}} {{tt 'invoice.gross'}}<br>"}}
+{{>partial1}}
+
+{{#inline_partial "partial2"}}
+  {{#eq lang "pl"}}
+  Добрий дня,
+  {{else}}
+    Hello,
+  {{/eq}}
+  {{>partial1}}
+{{/inline_partial}}
+{{>partial2}}
+``` 
+## Імпорт даних
+
+Можна імпортувати дані з будь-яких програм, які зберігатимуть дані у файли .TXT, .CSV, .XLS, .ODS, .XLSX, .TSV, .XML. Під час імпорту ви можете вказати, які стовпці та рядки імпортувати.
+
+Ви можете імпортувати рахунки-фактури, клієнтів, продукти
+
+## API
+Опис API можна знайти тут: Fakturownia API
+
+
